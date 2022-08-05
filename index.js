@@ -4,7 +4,6 @@ const app = express()
 const Note = require('./models/note')
 
 app.use(express.json())
-app.use(cors())
 app.use(express.static('build'))
 
 const url = process.env.MONGODB_URI
