@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const Note = require('./models/note')
+const mongoose = require('mongoose')
 
 app.use(express.json())
 app.use(express.static('build'))
@@ -45,30 +46,29 @@ noteSchema.set('toJSON', {
 //   },
 // ]
 
-const generateId = () => {
-  const maxId = notes.length > 0 ? Math.max(...notes.map((n) => n.id)) : 0
-  return maxId + 1
-}
+// const generateId = () => {
+//   const maxId = notes.length > 0 ? Math.max(...notes.map((n) => n.id)) : 0
+//   return maxId + 1
+// }
 
 app.post('/api/notes', (request, response) => {
   const body = request.body
 
-  if (!body.content) {
+  if (body.content === undefined) {
     return response.status(400).json({
       error: 'content missing',
     })
   }
 
-  const note = {
+  const note = new Note({
     content: body.content,
-    id: generateId(),
     important: body.important || false,
     date: new Date(),
-  }
+  })
 
-  notes = notes.concat(note)
-
-  response.json(note)
+  note.save().then((savedNote) => {
+    response.json(savedNote)
+  })
 })
 
 app.get('/api/notes', (request, response) => {
@@ -78,15 +78,9 @@ app.get('/api/notes', (request, response) => {
 })
 
 app.get('/api/notes/:id', (request, response) => {
-  const id = Number(request.params.id)
-  const note = notes.find((note) => {
-    return note.id === id
-  })
-  if (note) {
+  Note.findById(request.params.id).then((note) => {
     response.json(note)
-  } else {
-    response.status(404).end()
-  }
+  })
 })
 app.delete('/api/notes/:id', (request, response) => {
   const id = Number(request.params.id)
