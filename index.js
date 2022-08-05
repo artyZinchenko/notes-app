@@ -1,15 +1,12 @@
 require('dotenv').config()
 const express = require('express')
 const app = express()
+const cors = require('cors')
 const Note = require('./models/note')
-const mongoose = require('mongoose')
 
 app.use(express.json())
 app.use(express.static('build'))
-
-const url = process.env.MONGODB_URI
-
-mongoose.connect(url)
+app.use(cors())
 
 const noteSchema = new mongoose.Schema({
   content: String,
@@ -82,11 +79,11 @@ app.get('/api/notes/:id', (request, response) => {
     response.json(note)
   })
 })
-app.delete('/api/notes/:id', (request, response) => {
-  const id = Number(request.params.id)
-  notes = notes.filter((note) => note.id !== id)
-  response.status(204).end()
-})
+// app.delete('/api/notes/:id', (request, response) => {
+//   const id = Number(request.params.id)
+//   notes = notes.filter((note) => note.id !== id)
+//   response.status(204).end()
+// })
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {
