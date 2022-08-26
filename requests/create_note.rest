@@ -2,6 +2,7 @@ POST http://localhost:3001/api/notes
 Content-Type: application/json
 
 {
-    "content": "HT is easy",
-    "important": true
+    "content": "Checking if population works ",
+    "important": false,
+    "userId": "63078a801e3fb262ccc31063"
 }
