@@ -1,8 +1,8 @@
 POST http://localhost:3001/api/notes
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkNvcnJlY3RVc2VyIiwiaWQiOiI2MzA4ZTA3OWY2ZDY3ZWJiOWY4OTEzMWIiLCJpYXQiOjE2NjE2MDQ2MjN9.fkBiY2sx9uo8b1IyQ9nF-VckErxSNt2_qYozPMDpnm8
 
 {
-    "content": "Checking if population works ",
+    "content": "Checking if Authorization works ",
     "important": false,
-    "userId": "63078a801e3fb262ccc31063"
 }
