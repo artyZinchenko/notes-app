@@ -12,7 +12,7 @@
     "logs:prod": "heroku logs --tail",
     "lint": "eslint --fix --ext .js,.jsx .",
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit",
-    "serverTest": "cross-env NODE_ENV=test nodemon index.js"
+    "start:test": "cross-env NODE_ENV=test nodemon index.js"
   },
   "author": "Artem Zinchenko",
   "license": "ISC",

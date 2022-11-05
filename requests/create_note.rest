@@ -1,8 +1,8 @@
 POST http://localhost:3001/api/notes
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkNvcnJlY3RVc2VyIiwiaWQiOiI2MzA4ZTA3OWY2ZDY3ZWJiOWY4OTEzMWIiLCJpYXQiOjE2NjE2MDQ2MjN9.fkBiY2sx9uo8b1IyQ9nF-VckErxSNt2_qYozPMDpnm8
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3RVc2VyIiwiaWQiOiI2MzIwNDUwNTY5YWViZDU2NjRmYzZiMzIiLCJpYXQiOjE2NjMwNTkyMTh9.d7wasPX4PCNHA2Xr4UHCwc3RsLa9NcA_kJHrl90HyaM
 
 {
     "content": "Checking if Authorization works ",
-    "important": false,
+    "important": false
 }

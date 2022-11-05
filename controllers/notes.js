@@ -19,14 +19,19 @@ notesRouter.post('/', async (request, response) => {
   if (!decodedToken.id) {
     return response.status(401).json({ error: 'token missing or invalid' })
   }
-  const user = await User.findById(decodedToken.id)
-  console.log(user)
+
+  const user = await User.findOne({ _id: decodedToken.id })
+  if (!user) {
+    return response
+      .status(404)
+      .json({ error: 'invalid user, please re-enter app' })
+  }
 
   const note = new Note({
     content: body.content,
     important: body.important || false,
     date: new Date(),
-    user: user._id,
+    user: user.id,
   })
 
   const savedNote = await note.save()
@@ -37,8 +42,27 @@ notesRouter.post('/', async (request, response) => {
 })
 
 notesRouter.get('/', async (request, response) => {
+  const token = getTokenFrom(request)
+  const decodedToken = jwt.verify(token, process.env.SECRET)
+  if (!decodedToken.id) {
+    return response.status(401).json({ error: 'token missing or invalid' })
+  }
+
+  const user = await User.findOne({ _id: decodedToken.id })
+  if (!user) {
+    return response
+      .status(404)
+      .json({ error: 'invalid user, please re-enter app' })
+  }
+
   const notes = await Note.find({}).populate('user', { username: 1, name: 1 })
-  response.json(notes)
+
+  const filteredNotes = notes.filter((el) => {
+    if (!el.user) return
+    return el.user._id.toString() === user._id.toString()
+  })
+
+  response.json(filteredNotes)
 })
 
 notesRouter.get('/:id', async (request, response) => {

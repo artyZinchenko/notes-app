@@ -4,7 +4,7 @@ const User = require('../models/user')
 require('express-async-errors')
 
 usersRouter.post('/', async (request, response) => {
-  const { username, name, password } = request.body
+  const { username, name = 'user', password } = request.body
 
   if (!password) {
     return response.status(400).json({ error: 'password is required' })

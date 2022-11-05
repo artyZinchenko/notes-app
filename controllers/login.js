@@ -6,7 +6,7 @@ require('express-async-errors')
 
 loginRouter.post('/', async (request, response) => {
   const { username, password } = request.body
-
+  console.log(username, password)
   const foundUser = await User.findOne({ username })
 
   const passwordCorrect =
@@ -15,14 +15,15 @@ loginRouter.post('/', async (request, response) => {
       : await bcrypt.compare(password, foundUser.passwordHash)
 
   if (!(passwordCorrect && foundUser)) {
-    return response.json({ error: 'username or password is not valid' })
+    return response
+      .status(401)
+      .json({ error: 'username or password is not valid' })
   }
 
   const token = jwt.sign(
     { username: foundUser.username, id: foundUser._id },
     process.env.SECRET
   )
-
   response
     .status(201)
     .send({ token, username: foundUser.username, name: foundUser.name })
