@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
-    "start": "cross-env NODE_ENV=production node index.js",
+    "start": "node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "build:ui": "rm -rf build && cd ../notes-front/ && npm run build && cp -r build ../Notes_back",
     "deploy": "git push heroku master",
